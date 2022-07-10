@@ -1,8 +1,7 @@
 """ to define the Flask application instance """
 
-from app import create_app, db
+from app import create_app, db, cli
 from app.models import User, Post
-from app import cli #for command line commands to work
 
 app = create_app()
 cli.register(app)
