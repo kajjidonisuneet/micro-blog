@@ -19,3 +19,5 @@
   ⁃ Restart Elasticsearch.
 • On other nodes:
   ⁃ Start Elasticsearch with `bin/elasticsearch --enrollment-token <token>`, using the enrollment token that you generated.
+
+  https://www.elastic.co/guide/en/elasticsearch/reference/current/starting-elasticsearch.html
