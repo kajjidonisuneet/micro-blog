@@ -1,0 +1,20 @@
+start elasticsearch, from the installed folder
+./bin/elasticsearch
+to check for up and running 
+sudo systemctl status elasticsearch.service
+---------------------------------------
+start redis-server
+this will be auto started
+
+to check for redis-server
+sudo systemctl status redis
+
+to stat a redis worker (in venv)
+rq worker microblog-tasks
+---------------------------
+
+to start a local mail server (in venv)
+python -m smtpd -n -c DebuggingServer localhost:8025
+
+
+---------------------------

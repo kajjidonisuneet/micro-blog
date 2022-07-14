@@ -1,0 +1,14 @@
+{
+    "cSpell.words": [
+        "availabe",
+        "backref",
+        "inculded",
+        "interperter",
+        "primaryjoin",
+        "secondaryjoin",
+        "valign",
+        "werkzeug"
+    ],
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": false
+}
