@@ -185,6 +185,7 @@ class User(UserMixin, PaginatedAPIMixin, db.Model):
                 'self':url_for('api.get_user', id=self.id),
                 'followers':url_for('api.get_followers', id=self.id),
                 'followed':url_for('api.get_followed', id=self.id),
+                'user_posts':url_for('api.get_user_posts', id=self.id),
                 'avatar':self.avatar(128)
             }
 
@@ -224,7 +225,7 @@ class User(UserMixin, PaginatedAPIMixin, db.Model):
         return user
 
 
-class Post(SearchableMixin, db.Model):
+class Post(PaginatedAPIMixin, SearchableMixin, db.Model):
     __searchable__ = ['body']
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String(140))
@@ -233,6 +234,24 @@ class Post(SearchableMixin, db.Model):
     language = db.Column(db.String(5))
     def __repr__(self):
         return '<Post {}>'.format(self.body)
+
+    def to_dict(self):
+        data = {
+            'id':self.id,
+            'body':self.body,
+            'timestamp':self.timestamp.isoformat() + 'Z',
+            'user_id':self.user_id,
+            'language':self.language,
+            'user_link':url_for('api.get_user', id=self.author.id)
+        }
+
+        return data
+
+    def from_dict(self, data, user_id):
+        if 'body' in data:
+            setattr(self, 'body', data['body'])
+        setattr(self, 'user_id', user_id)
+        
 
 class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True)

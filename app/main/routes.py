@@ -125,6 +125,10 @@ def translate_text():
 @bp.route('/search')
 @login_required
 def search():
+    if current_app.elasticsearch == None:
+        flash(_('elastic search service is offline'))
+        return redirect(url_for('main.index'))
+
     if not g.search_form.validate():
         return redirect(url_for('main.explore'))
     page = request.args.get('page', 1, type=int)

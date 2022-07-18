@@ -1,7 +1,7 @@
 from flask import abort
 from app.api import bp
 from flask import jsonify, request, url_for
-from app.models import User
+from app.models import User, Post
 from app.api.errors import bad_request
 from app import db
 from app.api.auth import token_auth
@@ -71,3 +71,44 @@ def update_user(id):
     user.from_dict(data, new_user=False)
     db.session.commit()
     return jsonify(user.to_dict())
+
+@bp.route('/post/<int:id>', methods=['GET'])
+@token_auth.login_required
+def get_post(id):
+    return jsonify(Post.query.get_or_404(id).to_dict())
+
+@bp.route('/users/<int:id>/posts', methods=['GET'])
+@token_auth.login_required
+def get_user_posts(id):
+    user = User.query.get_or_404(id)
+    page = request.args.get('page', 1, type=int)
+    per_page = min(request.args.get('per_page', 10, type=int), 100)
+    data = Post.to_collection_dict(user.posts, page, per_page, 'api.get_user_posts', id=id)
+    return jsonify(data)
+
+@bp.route('/users/<int:id>/posts', methods=['POST'])
+@token_auth.login_required
+def add_posts(id):
+    if token_auth.current_user().id != id:
+        abort(403)
+    data = request.get_json() or {}
+    if 'body' not in data:
+        return bad_request('please include body and user id')
+    post = Post()
+    post.from_dict(data, user_id = id)
+    db.session.add(post)
+    db.session.commit()
+    response = jsonify(post.to_dict())
+    response.status_code = 201
+    response.headers['location'] = url_for('api.get_post', id=post.id)
+    return response
+
+@bp.route('/users/<int:id>/followed_post', methods=['GET'])
+@token_auth.login_required
+def get_followed_posts(id):
+    user = User.query.get_or_404(id)
+    page = request.args.get('page', 1, type=int)
+    per_page = min(request.args.get('per_page', 10, type=int), 100)
+    data = Post.to_collection_dict(user.followed_posts(), page, per_page, 'api.get_followed_posts', id=id)
+    return jsonify(data)
+

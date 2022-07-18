@@ -1,5 +1,7 @@
-start elasticsearch, from the installed folder
+----------------------------------
+start elasticsearch, from the installed folder (downloads)
 ./bin/elasticsearch
+
 to check for up and running 
 sudo systemctl status elasticsearch.service
 ---------------------------------------
@@ -12,9 +14,45 @@ sudo systemctl status redis
 to stat a redis worker (in venv)
 rq worker microblog-tasks
 ---------------------------
-
 to start a local mail server (in venv)
 python -m smtpd -n -c DebuggingServer localhost:8025
-
-
 ---------------------------
+API request formats (in venv)
+
+to register a user:
+http POST http://localhost:5000/api/users username=<username> password=<password> email=<email id> "about_me=<some text this is optional (as this will be having space this is put un quotes)>"
+
+to get the token
+http --auth <username>:<password> POST http://localhost:5000/api/tokens
+
+to get single user data:
+http GET http://localhost:5000/api/users/<user id> "Authorization:Bearer <token>"
+
+to get collection of user data:
+http GET http://localhost:5000/api/users "Authorization:Bearer <token>"
+
+to get followers data:
+http GET http://localhost:5000/api/users/<user id>/followers "Authorization:Bearer <token>"
+
+to get followed data:
+http GET http://localhost:5000/api/users/<user id>/followed "Authorization:Bearer <token>"
+
+to edit the user data:
+http PUT http://localhost:5000/api/users/<user id> "about_me=<data you want to update>" "Authorization:Bearer <token>"
+-------
+for posts
+to get a single post:
+http GET http://localhost:5000/api/post/<post id> "Authorization:Bearer <token>"
+
+to get all the post of single user:
+http GET http://localhost:5000/api/users/<user id>/posts "Authorization:Bearer <token>"
+
+to add a post:
+http POST http://localhost:5000/api/users/<user id>/posts "body=<text of the blog post>" "Authorization:Bearer <token>"
+
+to get all users followed posts:
+http GET http://localhost:5000/api/users/<user id>/followed_post "Authorization:Bearer <token>"
+
+
+
+-----------------------------
