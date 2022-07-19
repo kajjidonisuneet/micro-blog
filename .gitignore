@@ -4,5 +4,4 @@ __pycache__/
 micro_venv/
 app.db
 elastic.txt
-migrations/
 .vscode/
