@@ -17,7 +17,7 @@ Note - Few of features are not active on the heroku deployment.
 
 ### Built With
 - Python's Flask
-- JavaScript
+- SQLAlchemy (Database)
 - Bootstrap
 - JQuery
 
