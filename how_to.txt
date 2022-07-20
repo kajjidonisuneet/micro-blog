@@ -53,6 +53,4 @@ http POST http://localhost:5000/api/users/<user id>/posts "body=<text of the blo
 to get all users followed posts:
 http GET http://localhost:5000/api/users/<user id>/followed_post "Authorization:Bearer <token>"
 
-
-
 -----------------------------
