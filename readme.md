@@ -1,7 +1,7 @@
 ## MicroBlog
 ![plot](_data/user_page-screenshot.png)
 
-Microblog a web app that allows posting of short messages. This web app is built to primarily to demonstrate the usage of python's flask framework.
+Microblog a web app that allows posting of short messages. This web app is built to primarily to demonstrate the usage of flask framework.
 
 Deployed link - https://suneet-microblog.herokuapp.com/<br>
 Note - Few of features are not active on the heroku deployment.  
@@ -16,8 +16,13 @@ Note - Few of features are not active on the heroku deployment.
 - API support for user and post data
 
 ### Built With
-- Python's Flask
-- SQLAlchemy (Database)
+- Python
+- Flask
+- SQLAlchemy 
+- Postgress
+- Elastic Search
+- Redis Queue
+- REST API
 - Bootstrap
 - JQuery
 
